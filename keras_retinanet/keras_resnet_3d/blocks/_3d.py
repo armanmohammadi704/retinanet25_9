@@ -10,7 +10,7 @@ This module implements a number of popular three-dimensional residual blocks.
 import keras.layers
 import keras.regularizers
 
-import keras_resnet.layers
+import keras_resnet_3d.layers
 
 parameters = {
     "kernel_initializer": "he_normal"
