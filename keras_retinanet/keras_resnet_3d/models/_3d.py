@@ -12,8 +12,8 @@ import keras.layers
 import keras.models
 import keras.regularizers
 
-import keras_resnet.blocks
-import keras_resnet.layers
+import keras_resnet_3d.blocks
+import keras_resnet_3d.layers
 
 
 class ResNet3D(keras.Model):
