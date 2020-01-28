@@ -12,8 +12,8 @@ import keras.layers
 import keras.models
 import keras.regularizers
 
-from .. import blocks
-from .. import layers
+import keras_resnet.blocks
+import keras_resnet.layers
 
 
 class ResNet3D(keras.Model):
@@ -75,7 +75,7 @@ class ResNet3D(keras.Model):
 
         x = keras.layers.ZeroPadding3D(padding=(3,3,0), name="padding_conv1")(inputs)
         x = keras.layers.Conv3D(64, (7, 7,1), strides=(2, 2,1), use_bias=False, name="conv1")(x)
-        x = layers.BatchNormalization(axis=axis, epsilon=1e-5, freeze=freeze_bn, name="bn_conv1")(x)
+        x = keras_resnet.layers.BatchNormalization(axis=axis, epsilon=1e-5, freeze=freeze_bn, name="bn_conv1")(x)
         x = keras.layers.Activation("relu", name="conv1_relu")(x)
         x = keras.layers.MaxPooling3D((3, 3,1), strides=(2, 2,1), padding="same", name="pool1")(x)
 
@@ -144,7 +144,7 @@ class ResNet3D18(ResNet3D):
         super(ResNet3D18, self).__init__(
             inputs,
             blocks,
-            block=blocks.basic_3d,
+            block=keras_resnet.blocks.basic_3d,
             include_top=include_top,
             classes=classes,
             freeze_bn=freeze_bn,
@@ -188,7 +188,7 @@ class ResNet3D34(ResNet3D):
         super(ResNet3D34, self).__init__(
             inputs,
             blocks,
-            block=blocks.basic_3d,
+            block=keras_resnet.blocks.basic_3d,
             include_top=include_top,
             classes=classes,
             freeze_bn=freeze_bn,
@@ -235,7 +235,7 @@ class ResNet3D50(ResNet3D):
             inputs,
             blocks,
             numerical_names=numerical_names,
-            block=blocks.bottleneck_3d,
+            block=keras_resnet.blocks.bottleneck_3d,
             include_top=include_top,
             classes=classes,
             freeze_bn=freeze_bn,
@@ -282,7 +282,7 @@ class ResNet3D101(ResNet3D):
             inputs,
             blocks,
             numerical_names=numerical_names,
-            block=blocks.bottleneck_3d,
+            block=keras_resnet.blocks.bottleneck_3d,
             include_top=include_top,
             classes=classes,
             freeze_bn=freeze_bn,
@@ -329,7 +329,7 @@ class ResNet3D152(ResNet3D):
             inputs,
             blocks,
             numerical_names=numerical_names,
-            block=blocks.bottleneck_3d,
+            block=keras_resnet.blocks.bottleneck_3d,
             include_top=include_top,
             classes=classes,
             freeze_bn=freeze_bn,
@@ -376,7 +376,7 @@ class ResNet3D200(ResNet3D):
             inputs,
             blocks,
             numerical_names=numerical_names,
-            block=blocks.bottleneck_3d,
+            block=keras_resnet.blocks.bottleneck_3d,
             include_top=include_top,
             classes=classes,
             freeze_bn=freeze_bn,
