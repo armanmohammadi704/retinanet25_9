@@ -213,15 +213,19 @@ class CSVGenerator(Generator):
         """ Load annotations for an image_index.
         """
         path        = self.image_names[image_index]
-        annotations = {'labels': np.empty((0,)), 'bboxes': np.empty((0, 4))}
-
-        for idx, annot in enumerate(self.image_data[path]):
-            annotations['labels'] = np.concatenate((annotations['labels'], [self.name_to_label(annot['class'])]))
-            annotations['bboxes'] = np.concatenate((annotations['bboxes'], [[
+        for i in range(25):
+            globals()['frame{}_labels'.format(i+1)]=np.empty(0,)
+            globals()['frame{}_bboxes'.format(i+1)]=np.empty((0,4))
+        for idx, annot in enumerate(image_data[path]):
+            frame_num=int(annot['frame'])
+            globals()['frame{}_labels'.format(frame_num)]=np.concatenate((globals()['frame{}_labels'.format(frame_num)],
+                                                                          [self.name_to_label(annot['class'])]))
+            globals()['frame{}_bboxes'.format(frame_num)]=np.concatenate((globals()['frame{}_bboxes'.format(frame_num)], [[
                 float(annot['x1']),
                 float(annot['y1']),
                 float(annot['x2']),
                 float(annot['y2']),
             ]]))
-
+            annotations={'labels':np.array([globals()['frame{}_labels'.format(i+1)] for i in range(25)]),
+                         'bboxes':np.array([globals()['frame{}_bboxes'.format(i+1)] for i in range(25)])}
         return annotations
