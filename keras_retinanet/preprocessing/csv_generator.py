@@ -216,7 +216,7 @@ class CSVGenerator(Generator):
         for i in range(25):
             globals()['frame{}_labels'.format(i+1)]=np.empty(0,)
             globals()['frame{}_bboxes'.format(i+1)]=np.empty((0,4))
-        for idx, annot in enumerate(image_data[path]):
+        for idx, annot in enumerate(self.image_data[path]):
             frame_num=int(annot['frame'])
             globals()['frame{}_labels'.format(frame_num)]=np.concatenate((globals()['frame{}_labels'.format(frame_num)],
                                                                           [self.name_to_label(annot['class'])]))
