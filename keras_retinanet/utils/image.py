@@ -68,7 +68,7 @@ def adjust_transform_for_image(transform, image, relative_translation):
     The translation of the matrix will be scaled with the size of the image.
     The linear part of the transformation will adjusted so that the origin of the transformation will be at the center of the image.
     """
-    height, width, channels = image.shape
+    height, width, channels = image.shape[:3]
 
     result = transform
 
@@ -141,6 +141,7 @@ def apply_transform(matrix, image, params):
       image:  The image to transform.
       params: The transform parameters (see TransformParameters)
     """
+    image=image[:3]
     output = cv2.warpAffine(
         image,
         matrix[:2, :],
@@ -162,7 +163,7 @@ def compute_resize_scale(image_shape, min_side=800, max_side=1333):
     Returns
         A resizing scale.
     """
-    (rows, cols, _) = image_shape
+    (rows, cols, _) = image_shape[:,3]
 
     smallest_side = min(rows, cols)
 
@@ -189,9 +190,9 @@ def resize_image(img, min_side=800, max_side=1333):
         A resized image.
     """
     # compute scale to resize the image
-    scale = compute_resize_scale(img.shape, min_side=min_side, max_side=max_side)
+    scale = compute_resize_scale(img, min_side=min_side, max_side=max_side)
 
     # resize the image with the computed scale
-    img = cv2.resize(img, None, fx=scale, fy=scale)
-
+    img = cv2.resize(img[:3], None, fx=scale, fy=scale)
+    img=np.expand_dims(img,3)
     return img, scale
