@@ -141,7 +141,7 @@ def apply_transform(matrix, image, params):
       image:  The image to transform.
       params: The transform parameters (see TransformParameters)
     """
-    image=image[:3]
+    image=image[:,:,:,0]
     output = cv2.warpAffine(
         image,
         matrix[:2, :],
@@ -163,7 +163,7 @@ def compute_resize_scale(image_shape, min_side=800, max_side=1333):
     Returns
         A resizing scale.
     """
-    (rows, cols, _) = image_shape[:,3]
+    (rows, cols, _) = image_shape[:3]
 
     smallest_side = min(rows, cols)
 
@@ -193,6 +193,6 @@ def resize_image(img, min_side=800, max_side=1333):
     scale = compute_resize_scale(img, min_side=min_side, max_side=max_side)
 
     # resize the image with the computed scale
-    img = cv2.resize(img[:3], None, fx=scale, fy=scale)
+    img = cv2.resize(img[:,:,:,0], None, fx=scale, fy=scale)
     img=np.expand_dims(img,3)
     return img, scale
