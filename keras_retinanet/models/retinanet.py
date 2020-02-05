@@ -108,7 +108,7 @@ def default_regression_model(num_values, num_anchors, pyramid_feature_size=256, 
     else:
         inputs  = keras.layers.Input(shape=(None,None, None, pyramid_feature_size))
     outputs = inputs
-    for i in range(1):
+    for i in range(4):
         outputs = keras.layers.Conv3D(
             filters=regression_feature_size,
             activation='relu',
