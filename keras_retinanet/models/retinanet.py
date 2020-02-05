@@ -331,12 +331,12 @@ def retinanet_bbox(
     anchors  = __build_anchors(anchor_params, features)
 
     # we expect the anchors, regression and classification values as first output
-    regression     = model.outputs[0]
-    classification = model.outputs[1]
+    regression     = model.outputs[0][:24]
+    classification = model.outputs[1][:24]
 
     # "other" can be any additional output from custom submodels, by default this will be []
     other = model.outputs[2:]
-
+    
     # apply predicted regression to anchors
     boxes = layers.RegressBoxes(name='boxes')([anchors, regression])
     boxes = layers.ClipBoxes(name='clipped_boxes')([model.inputs[0], boxes])
