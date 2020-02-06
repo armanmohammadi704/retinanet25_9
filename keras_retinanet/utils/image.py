@@ -181,7 +181,7 @@ def compute_resize_scale(image_shape, min_side=800, max_side=1333):
 
 def resize_image(img, min_side=800, max_side=1333):
     """ Resize an image such that the size is constrained to min_side and max_side.
-
+    
     Args
         min_side: The image's min side will be equal to min_side after resizing.
         max_side: If after resizing the image's max side is above max_side, resize until the max side is equal to max_side.
@@ -189,6 +189,7 @@ def resize_image(img, min_side=800, max_side=1333):
     Returns
         A resized image.
     """
+    print(img.shape)
     # compute scale to resize the image
     scale = compute_resize_scale(img[:,:,:,0].shape, min_side=min_side, max_side=max_side)
 
