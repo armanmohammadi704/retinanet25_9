@@ -204,8 +204,32 @@ class CSVGenerator(Generator):
     def load_image(self, image_index):
         """ Load an image at the image_index.
         """
+        img_path = self.image_names[image_index]
 
-        img=np.load(self.image_path(image_index))
+        if  img_path[-6:] == '01.jpg':
+            image_index1 = image_index
+            image_index2 = image_index+1
+
+        elif img_path[-6:] == '25.jpg':
+            image_index1 = image_index-1
+            image_index2 = image_index
+
+        else:
+            image_index1 = image_index-1
+            image_index2 = image_index+1
+
+        image1=read_image_bgr(self.image_path(image_index))
+        image2=read_image_bgr(self.image_path(image_index1))
+        image3=read_image_bgr(self.image_path(image_index2))
+
+        gray1 = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
+        gray2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
+        gray3 = cv2.cvtColor(image3, cv2.COLOR_BGR2GRAY)
+
+        img = np.zeros((576,768,3))
+        img[:,:,0]= gray2
+        img[:,:,1]= gray1
+        img[:,:,2]= gray3
         
         return img
 
@@ -213,19 +237,15 @@ class CSVGenerator(Generator):
         """ Load annotations for an image_index.
         """
         path        = self.image_names[image_index]
-        for i in range(25):
-            globals()['frame{}_labels'.format(i+1)]=np.empty(0,)
-            globals()['frame{}_bboxes'.format(i+1)]=np.empty((0,4))
+        annotations = {'labels': np.empty((0,)), 'bboxes': np.empty((0, 4))}
+
         for idx, annot in enumerate(self.image_data[path]):
-            frame_num=int(annot['frame'])
-            globals()['frame{}_labels'.format(frame_num)]=np.concatenate((globals()['frame{}_labels'.format(frame_num)],
-                                                                          [self.name_to_label(annot['class'])]))
-            globals()['frame{}_bboxes'.format(frame_num)]=np.concatenate((globals()['frame{}_bboxes'.format(frame_num)], [[
+            annotations['labels'] = np.concatenate((annotations['labels'], [self.name_to_label(annot['class'])]))
+            annotations['bboxes'] = np.concatenate((annotations['bboxes'], [[
                 float(annot['x1']),
                 float(annot['y1']),
                 float(annot['x2']),
                 float(annot['y2']),
             ]]))
-            annotations={'labels':np.array([globals()['frame{}_labels'.format(i+1)] for i in range(25)]),
-                         'bboxes':np.array([globals()['frame{}_bboxes'.format(i+1)] for i in range(25)])}
+
         return annotations
