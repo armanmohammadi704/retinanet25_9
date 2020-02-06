@@ -163,7 +163,7 @@ def compute_resize_scale(image_shape, min_side=800, max_side=1333):
     Returns
         A resizing scale.
     """
-    (rows, cols, _) = image_shape[:3]
+    (rows, cols, _) = image_shape[:,:,:,0]
 
     smallest_side = min(rows, cols)
 
