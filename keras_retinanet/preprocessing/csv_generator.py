@@ -230,7 +230,7 @@ class CSVGenerator(Generator):
         img[:,:,0]= gray2
         img[:,:,1]= gray1
         img[:,:,2]= gray3
-        
+        img=np.expand_dims(img,axis=3)
         return img
 
     def load_annotations(self, image_index):
