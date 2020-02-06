@@ -260,7 +260,6 @@ class Generator(keras.utils.Sequence):
         """
         # get the max image shape
         max_shape = tuple(max(image.shape[x] for image in image_group) for x in range(4))
-        print(max_shape)
         # construct an image batch object
         image_batch = np.zeros((self.batch_size,) + max_shape, dtype=keras.backend.floatx())
 
