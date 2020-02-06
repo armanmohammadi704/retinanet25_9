@@ -68,15 +68,15 @@ def _read_annotations(csv_reader, classes):
         line += 1
 
         try:
-            img_file, x1, y1, x2, y2, class_name,frame_num = row[:7]
+            img_file, x1, y1, x2, y2, class_name = row[:6]
         except ValueError:
-            raise_from(ValueError('line {}: format should be \'img_file,x1,y1,x2,y2,class_name,frame_num\' or \'img_file,,,,,\''.format(line)), None)
+            raise_from(ValueError('line {}: format should be \'img_file,x1,y1,x2,y2,class_name\' or \'img_file,,,,,\''.format(line)), None)
 
         if img_file not in result:
             result[img_file] = []
 
         # If a row contains only an image path, it's an image without annotations.
-        if (x1, y1, x2, y2, class_name,frame_num) == ('', '', '', '', '',''):
+        if (x1, y1, x2, y2, class_name) == ('', '', '', '', ''):
             continue
 
         x1 = _parse(x1, int, 'line {}: malformed x1: {{}}'.format(line))
@@ -94,7 +94,7 @@ def _read_annotations(csv_reader, classes):
         if class_name not in classes:
             raise ValueError('line {}: unknown class name: \'{}\' (classes: {})'.format(line, class_name, classes))
 
-        result[img_file].append({'x1': x1, 'x2': x2, 'y1': y1, 'y2': y2, 'class': class_name, 'frame':frame_num})
+        result[img_file].append({'x1': x1, 'x2': x2, 'y1': y1, 'y2': y2, 'class': class_name})
     return result
 
 
@@ -208,17 +208,19 @@ class CSVGenerator(Generator):
 
         if  img_path[-6:] == '01.jpg':
             image_index1 = image_index
-            image_index2 = image_index
-        if  img_path[-6:] == '02.jpg':
+            image_index2 = image_index+1
+
+        elif img_path[-6:] == '25.jpg':
             image_index1 = image_index-1
-            image_index2 = image_index-1
+            image_index2 = image_index
+
         else:
             image_index1 = image_index-1
-            image_index2 = image_index-2
+            image_index2 = image_index+1
 
-        image1=read_image_bgr(self.image_path(image_index2))
+        image1=read_image_bgr(self.image_path(image_index))
         image2=read_image_bgr(self.image_path(image_index1))
-        image3=read_image_bgr(self.image_path(image_index))
+        image3=read_image_bgr(self.image_path(image_index2))
 
         gray1 = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
         gray2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
