@@ -255,7 +255,6 @@ class Generator(keras.utils.Sequence):
 
         # divide into groups, one group = one batch
         self.groups = [[order[x % len(order)] for x in range(i, i + self.batch_size)] for i in range(0, len(order), self.batch_size)]
-        print(self.groups)
     def compute_inputs(self, image_group):
         """ Compute inputs for the network using an image_group.
         """
@@ -301,18 +300,17 @@ class Generator(keras.utils.Sequence):
         """
         # load images and annotations
         image_group       = self.load_image_group(group)
-        print(np.shape(image_group))
         annotations_group = self.load_annotations_group(group)
 
         # check validity of annotations
         image_group, annotations_group = self.filter_annotations(image_group, annotations_group, group)
-
+        print('aa',np.shape(image_group))
         # randomly transform data
         image_group, annotations_group = self.random_transform_group(image_group, annotations_group)
-
+        print('bb',np.shape(image_group))
         # perform preprocessing steps
         image_group, annotations_group = self.preprocess_group(image_group, annotations_group)
-
+        print('cc',np.shape(image_group))
         # compute network inputs
         inputs = self.compute_inputs(image_group)
 
