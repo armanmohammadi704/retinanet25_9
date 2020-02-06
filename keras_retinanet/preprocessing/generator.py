@@ -259,8 +259,8 @@ class Generator(keras.utils.Sequence):
         """ Compute inputs for the network using an image_group.
         """
         # get the max image shape
-        max_shape = tuple(max(image.shape[x] for image in image_group) for x in range(3))
-
+        max_shape = tuple(max(image.shape[x] for image in image_group) for x in range(4))
+        print(max_shape)
         # construct an image batch object
         image_batch = np.zeros((self.batch_size,) + max_shape, dtype=keras.backend.floatx())
 
@@ -304,13 +304,10 @@ class Generator(keras.utils.Sequence):
 
         # check validity of annotations
         image_group, annotations_group = self.filter_annotations(image_group, annotations_group, group)
-        print('aa',np.shape(image_group))
         # randomly transform data
         image_group, annotations_group = self.random_transform_group(image_group, annotations_group)
-        print('bb',np.shape(image_group))
         # perform preprocessing steps
         image_group, annotations_group = self.preprocess_group(image_group, annotations_group)
-        print('cc',np.shape(image_group))
         # compute network inputs
         inputs = self.compute_inputs(image_group)
 
