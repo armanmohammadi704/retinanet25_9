@@ -317,7 +317,8 @@ class Generator(keras.utils.Sequence):
 
         # compute network targets
         targets = self.compute_targets(image_group, annotations_group)
-
+        print(inputs.shape)
+        print(targets.shape)
         return inputs, targets
 
     def __len__(self):
