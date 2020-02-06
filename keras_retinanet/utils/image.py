@@ -190,7 +190,7 @@ def resize_image(img, min_side=800, max_side=1333):
         A resized image.
     """
     # compute scale to resize the image
-    scale = compute_resize_scale(img.shape, min_side=min_side, max_side=max_side)
+    scale = compute_resize_scale(img[:,:,:,0].shape, min_side=min_side, max_side=max_side)
 
     # resize the image with the computed scale
     img = cv2.resize(img[:,:,:,0], None, fx=scale, fy=scale)
