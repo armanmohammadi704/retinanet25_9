@@ -178,7 +178,6 @@ class Generator(keras.utils.Sequence):
     def load_image_group(self, group):
         """ Load images for all images in a group.
         """
-        print(self.load_image(0).shape)
         return [self.load_image(image_index) for image_index in group]
 
     def random_transform_group_entry(self, image, annotations, transform=None):
