@@ -227,9 +227,9 @@ class CSVGenerator(Generator):
         gray3 = cv2.cvtColor(image3, cv2.COLOR_BGR2GRAY)
 
         img = np.zeros((576,768,3))
-        img[:,:,0]= gray2
-        img[:,:,1]= gray1
-        img[:,:,2]= gray3
+        img[:,:,0]= gray3
+        img[:,:,1]= gray2
+        img[:,:,2]= gray1
         img=np.expand_dims(img,axis=3)
         return img
 
