@@ -209,27 +209,78 @@ class CSVGenerator(Generator):
         if  img_path[-6:] == '01.jpg':
             image_index1 = image_index
             image_index2 = image_index
-
+            image_index3 = image_index
+            image_index4 = image_index
+            image_index5 = image_index
+            image_index6 = image_index
         elif img_path[-6:] == '02.jpg':
             image_index1 = image_index-1
             image_index2 = image_index-1
-
+            image_index3 = image_index-1
+            image_index4 = image_index-1
+            image_index5 = image_index-1
+            image_index6 = image_index-1
+        elif img_path[-6:] == '03.jpg':
+            image_index1 = image_index-1
+            image_index2 = image_index-2
+            image_index3 = image_index-2
+            image_index4 = image_index-2
+            image_index5 = image_index-2
+            image_index6 = image_index-2
+        elif img_path[-6:] == '04.jpg':
+            image_index1 = image_index-1
+            image_index2 = image_index-2
+            image_index3 = image_index-3
+            image_index4 = image_index-3
+            image_index5 = image_index-3
+            image_index6 = image_index-3
+        elif img_path[-6:] == '05.jpg':
+            image_index1 = image_index-1
+            image_index2 = image_index-2
+            image_index3 = image_index-3
+            image_index4 = image_index-4
+            image_index5 = image_index-4
+            image_index6 = image_index-4
+        elif img_path[-6:] == '06.jpg':
+            image_index1 = image_index-1
+            image_index2 = image_index-2
+            image_index3 = image_index-3
+            image_index4 = image_index-4
+            image_index5 = image_index-5
+            image_index6 = image_index-5
         else:
             image_index1 = image_index-1
             image_index2 = image_index-2
+            image_index3 = image_index-3
+            image_index4 = image_index-4
+            image_index5 = image_index-5
+            image_index6 = image_index-6
 
         image1=read_image_bgr(self.image_path(image_index))
         image2=read_image_bgr(self.image_path(image_index1))
         image3=read_image_bgr(self.image_path(image_index2))
-
+        image4=read_image_bgr(self.image_path(image_index3))
+        image5=read_image_bgr(self.image_path(image_index4))
+        image6=read_image_bgr(self.image_path(image_index5))
+        image7=read_image_bgr(self.image_path(image_index6))
+        
         gray1 = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
         gray2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
         gray3 = cv2.cvtColor(image3, cv2.COLOR_BGR2GRAY)
+        gray4 = cv2.cvtColor(image4, cv2.COLOR_BGR2GRAY)
+        gray5 = cv2.cvtColor(image5, cv2.COLOR_BGR2GRAY)
+        gray6 = cv2.cvtColor(image6, cv2.COLOR_BGR2GRAY)
+        gray7 = cv2.cvtColor(image7, cv2.COLOR_BGR2GRAY)    
+        
+        img = np.zeros((576,768,7))
+        img[:,:,0]= gray7
+        img[:,:,1]= gray6
+        img[:,:,2]= gray5
+        img[:,:,3]= gray4
+        img[:,:,4]= gray3
+        img[:,:,5]= gray2
+        img[:,:,6]= gray1
 
-        img = np.zeros((576,768,3))
-        img[:,:,0]= gray3
-        img[:,:,1]= gray2
-        img[:,:,2]= gray1
         img=np.expand_dims(img,axis=3)
         return img
 
