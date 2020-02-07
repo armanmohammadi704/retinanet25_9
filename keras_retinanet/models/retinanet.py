@@ -24,9 +24,9 @@ from . import assert_training_model
 def default_classification_model(
     num_classes,
     num_anchors,
-    pyramid_feature_size=512,
+    pyramid_feature_size=256,
     prior_probability=0.01,
-    classification_feature_size=512,
+    classification_feature_size=256,
     name='classification_submodel'
 ):
     """ Creates the default regression submodel.
@@ -79,7 +79,7 @@ def default_classification_model(
     return keras.models.Model(inputs=inputs, outputs=outputs, name=name)
 
 
-def default_regression_model(num_values, num_anchors, pyramid_feature_size=512, regression_feature_size=512, name='regression_submodel'):
+def default_regression_model(num_values, num_anchors, pyramid_feature_size=256, regression_feature_size=256, name='regression_submodel'):
     """ Creates the default regression submodel.
 
     Args
@@ -124,7 +124,7 @@ def default_regression_model(num_values, num_anchors, pyramid_feature_size=512, 
     return keras.models.Model(inputs=inputs, outputs=outputs, name=name)
 
 
-def __create_pyramid_features(C3, C4, C5, feature_size=512):
+def __create_pyramid_features(C3, C4, C5, feature_size=256):
     """ Creates the FPN layers on top of the backbone features.
 
     Args
