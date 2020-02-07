@@ -202,7 +202,7 @@ def evaluate(
             num_annotations     += annotations.shape[0]
             detected_annotations = []
             detected_annotations1 = []
-            image1 = generator.load_image(i)[:,:,6].astype(np.uint8)
+            image1 = generator.load_image(i)[:,:,4].astype(np.uint8)
             image1 = cv2.cvtColor(image1,cv2.COLOR_GRAY2BGR)
             
             draw_annotations(image1, generator.load_annotations(i))
