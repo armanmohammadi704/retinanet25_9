@@ -90,9 +90,9 @@ def resnet_retinanet(num_classes, backbone='resnet50', inputs=None, modifier=Non
     # choose default input
     if inputs is None:
         if keras.backend.image_data_format() == 'channels_first':
-            inputs = keras.layers.Input(shape=(7, None, None,1))
+            inputs = keras.layers.Input(shape=(9, None, None,1))
         else:
-            inputs = keras.layers.Input(shape=(None, None, 7,1))
+            inputs = keras.layers.Input(shape=(None, None, 9,1))
 
     # create the resnet backbone
     if backbone == 'resnet50':
