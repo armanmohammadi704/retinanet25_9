@@ -116,7 +116,7 @@ def default_regression_model(num_values, num_anchors, pyramid_feature_size=256, 
             **options
         )(outputs)
 
-    outputs = keras.layers.Conv3D(4, name='pyramid_regression', **options)(outputs)
+    outputs = keras.layers.Conv3D(num_anchors * num_values, name='pyramid_regression', **options)(outputs)
     if keras.backend.image_data_format() == 'channels_first':
         outputs = keras.layers.Permute((2, 3, 1), name='pyramid_regression_permute')(outputs)
     outputs = keras.layers.Reshape((-1, num_values), name='pyramid_regression_reshape')(outputs)
