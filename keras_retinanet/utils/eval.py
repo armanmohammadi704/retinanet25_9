@@ -69,7 +69,7 @@ def _get_detections(generator, model, score_threshold=0.05, max_detections=100, 
         raw_image    = generator.load_image(i)[:,:,:,0]
         image        = generator.preprocess_image(raw_image.copy())
         image, scale = generator.resize_image(image)
-        image=np.expand_dims(image,axis=3)
+
 
         if keras.backend.image_data_format() == 'channels_first':
             image = image.transpose((2, 0, 1))
