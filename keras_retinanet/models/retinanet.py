@@ -73,9 +73,9 @@ def default_classification_model(
     # reshape output and apply sigmoid
     if keras.backend.image_data_format() == 'channels_first':
         outputs = keras.layers.Permute((2, 3, 1), name='pyramid_classification_permute')(outputs)
-    outputs = keras.layers.Conv3D(1,(3,3,1),padding='same')(outputs)
     outputs = keras.layers.Activation('sigmoid', name='pyramid_classification_sigmoid')(outputs)
     #outputs = keras.layers.Reshape((-1,1, num_classes), name='pyramid_classification_reshape1')(outputs)
+    outputs = keras.layers.Conv3D(1,(3,3,1),padding='same')(outputs)
     outputs = keras.layers.Reshape((-1, num_classes), name='pyramid_classification_reshape')(outputs)
 
 
